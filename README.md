@@ -370,7 +370,7 @@ fbouquet@thepathfinder /tmp/lem-in $
 4000 rooms. 2 or 3 seconds is great, 9 seconds is mediocre, 15 seconds is too much.
 ```diff
 - These are maps with sometimes more than 10,000 lines, the way you
-  read and write data must also be fairly fast.
+- read and write data must also be fairly fast.
 ```
 * Now, it would have been interesting to find out more about the type of operations
 those students of the School of Wizardry could conduct with such a computer. All
