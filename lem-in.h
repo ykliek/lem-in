@@ -23,6 +23,13 @@
  * 		2. Organize two dimensional structure with end and start and all necessary information
  */
 
+typedef struct			s_data
+{
+	int					fd;
+	int					ants;
+	char				**map;
+}						t_data;
+
 typedef struct			s_node
 {
 
@@ -30,7 +37,8 @@ typedef struct			s_node
 
 typedef struct			s_room
 {
-	char	*name; // TODO: don't forget to clear memory
+	char	*name;
+	char	*inside;
 	int		x;
 	int		y;
 }						t_room;
@@ -44,9 +52,9 @@ typedef struct			s_anthill
 
 typedef struct			s_dblist
 {
-	int 		size;
-	t_anthill	*head;
-	t_anthill	*tail;
+	int 				size;
+	t_anthill			*head;
+	t_anthill			*tail;
 }						t_dblist;
 
 /*
@@ -55,12 +63,24 @@ typedef struct			s_dblist
 
 t_dblist				*create_dblist();
 
+t_anthill				*get_node(t_dblist *list, int i);
+
 void					delete_dblist(t_dblist **list);
 
 void					push_front(t_dblist *list, t_node *node);
 
 void					push_back(t_dblist *list, t_node *node);
 
-t_anthill				*get_node(t_dblist *list, int i);
+/*
+ * reader.c
+ */
+
+void					read_map(t_data *data);
+
+/*
+ * error_management
+ */
+
+int						err_massage(char *massage);
 
 #endif

@@ -84,6 +84,10 @@ void	push_back(t_dblist *list, t_node *node)
 	list->size++;
 }
 
+/*
+ * Пошук n-го елементу списку
+ */
+
 t_anthill	*get_node(t_dblist *list, int i)
 {
 	t_anthill	*tmp;
