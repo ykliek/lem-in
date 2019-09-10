@@ -10,9 +10,9 @@ _Summary: This project is meant to make you code an ant farm manager_
 
 # Contents
 
-**[1. Forword](#forword)**<br>
+**[1. Forward](#forward)**<br>
 **[2. Introduction](#introduction)**<br>
-**[3. Objectives](#objectioves)**<br>
+**[3. Objectives](#objectives)**<br>
 **[4. General Instructions](#general-instructions)**<br>
 **[4. Mandatory part](#mandatory-part)**<br>
 **[4. Bonus part ](#bonus-part)**<br>
@@ -22,7 +22,7 @@ _Summary: This project is meant to make you code an ant farm manager_
 
 # Chapter I
 
-## Forword
+## Forward
 
 Here is an extract of [Bill & John](http://billetjohn.free.fr/index_en.html)
 
