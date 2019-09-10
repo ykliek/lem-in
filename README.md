@@ -1,4 +1,4 @@
-![alt text](Screenshot_2.png)
+![alt text](./pictures/Screenshot_2.png)
 # Elementary algorithmic project
 ### lem-im
 
