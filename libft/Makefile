@@ -12,7 +12,7 @@
 
 CC = gcc
 
-CFLSGS = -c
+CFLSGS = -c -Wall -Wextra -Werror
 
 NAME = libft.a
 

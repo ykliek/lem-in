@@ -32,7 +32,7 @@ typedef struct			s_data
 
 typedef struct			s_node
 {
-
+	int ugit;
 }						t_node;
 
 typedef struct			s_room

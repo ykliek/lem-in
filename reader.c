@@ -14,21 +14,18 @@
 
 int		num_ants(char *line)
 {
+	int		count;
 	int		num;
 
-	while (line)
+	count = 0;
+	while (line[count] != '\0')
 	{
-		if (*line > '0' && *line < '9')
+		if (line[count] > '0' && line[count] < '9')
 			return (err_massage("Error. Incorrect number of ants"));
-		line++;
+		count++;
 	}
 	num = ft_atoi(line);
 	return (num >= 0 ? num : err_massage("Error. Incorrect number of ants"));
-}
-
-void	read_line(t_data *data)
-{
-
 }
 
 void	read_map(t_data *data)
@@ -36,11 +33,13 @@ void	read_map(t_data *data)
 	int		count;
 	char	*line;
 
+	count = 0;
 	while (get_next_line(data->fd, &line))
 		data->ants = num_ants(line);
 	ft_strdel(&line);
 	while (get_next_line(data->fd, &line))
 	{
-		read_line(data);
+		count++;
+//		read_line(data);
 	}
 }

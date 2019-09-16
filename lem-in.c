@@ -14,9 +14,6 @@
 
 int		main(int argc, char **argv)
 {
-	t_data	data;
-
-	data.fd = open(argv[1], O_RDONLY);
-	read_map(&data);
+	printf("sdas\n");
 	return (0);
 }

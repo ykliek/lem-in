@@ -12,7 +12,3 @@
 
 #include "lem-in.h"
 
-char	**read_map(int fd)
-{
-
-}
