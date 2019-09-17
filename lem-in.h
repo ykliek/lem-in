@@ -23,12 +23,22 @@
  * 		2. Organize two dimensional structure with end and start and all necessary information
  */
 
-typedef struct			s_data
+/*
+ * Error codes:
+ * 		0 - Success
+ * 		1 - To many arguments
+ * 		2 - Not enough arguments
+ * 		3 - Incorrect number of ants
+ * 		4 - Not a valid line
+ */
+
+enum
 {
-	int					fd;
-	int					ants;
-	char				**map;
-}						t_data;
+	ROOM,
+	COMMAND,
+	COMMENT,
+	LINK
+};
 
 typedef struct			s_node
 {
@@ -37,10 +47,10 @@ typedef struct			s_node
 
 typedef struct			s_room
 {
-	char	*name;
-	char	*inside;
 	int		x;
 	int		y;
+	char	*name;
+	char	*inside;
 }						t_room;
 
 typedef struct			s_anthill
@@ -56,6 +66,15 @@ typedef struct			s_dblist
 	t_anthill			*head;
 	t_anthill			*tail;
 }						t_dblist;
+
+
+typedef struct			s_data
+{
+	int					fd;
+	int					ants;
+	int					num_line;
+	t_dblist			*anthill;
+}						t_data;
 
 /*
  * lst_tools.c
@@ -75,12 +94,28 @@ void					push_back(t_dblist *list, t_node *node);
  * reader.c
  */
 
-void					read_map(t_data *data);
+int						read_map(t_data *data);
+
+int						define_line(t_data *data, char *line);
+
+int						num_ants(t_data *data, char *line);
 
 /*
- * error_management
+ * error_management.c
  */
 
-int						err_massage(char *massage);
+int						err_massage(char *massage, int err);
+
+/*
+ * parser.c
+ */
+
+int						parse_command(t_data *data, char *line);
+
+int						parse_comments(t_data *data, char *line);
+
+int						parse_room(t_data *data, char *line);
+
+int						parse_link(t_data *data, char *line);
 
 #endif

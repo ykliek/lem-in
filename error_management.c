@@ -12,9 +12,8 @@
 
 #include "lem-in.h"
 
-int		err_massage(char *massage)
+int		err_massage(char *massage, int err)
 {
-	ft_printf("%s", massage);
-	ft_strdel(&massage);
-	return (0);
+	ft_printf("%s\n", massage);
+	return (err);
 }

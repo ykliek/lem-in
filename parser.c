@@ -1,34 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lem-in.c                                           :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykliek <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/13 13:46:28 by ykliek            #+#    #+#             */
-/*   Updated: 2019/08/13 13:47:24 by ykliek           ###   ########.fr       */
+/*   Created: 2019/09/17 20:07:41 by ykliek            #+#    #+#             */
+/*   Updated: 2019/09/17 20:07:42 by ykliek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-int		main(int argc, char **argv)
+int		parse_command(t_data *data, char *line)
 {
-	t_data	data;
-	int		fd;
-	int		err;
+	return (0);
+}
 
-	if (argc == 2)
-	{
-		fd = open(argv[1], O_RDONLY);
-		data.fd = fd;
-		data.anthill = create_dblist();
-		err = read_map(&data);
-		if (err != 0)
-			return (err);
-	}
-	else
-		return (argc > 2 ? err_massage("To many arguments", 1) : err_massage(
-			"Not enough arguments", 2));
+int		parse_comments(t_data *data, char *line)
+{
+	return (0);
+}
+
+int		parse_room(t_data *data, char *line)
+{
+	return (0);
+}
+
+int		parse_link(t_data *data, char *line)
+{
 	return (0);
 }

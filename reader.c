@@ -12,7 +12,7 @@
 
 #include "lem-in.h"
 
-int		num_ants(char *line)
+int		num_ants(t_data *data, char *line)
 {
 	int		count;
 	int		num;
@@ -21,25 +21,53 @@ int		num_ants(char *line)
 	while (line[count] != '\0')
 	{
 		if (line[count] > '0' && line[count] < '9')
-			return (err_massage("Error. Incorrect number of ants"));
+			return (err_massage("Error. Incorrect number of ants", 3));
 		count++;
 	}
 	num = ft_atoi(line);
-	return (num >= 0 ? num : err_massage("Error. Incorrect number of ants"));
+	if (num >= 0)
+		data->ants = num;
+	else
+		return (err_massage("Error. Incorrect number of ants", 3));
+	return (0);
 }
 
-void	read_map(t_data *data)
+int		define_line(t_data *data, char *line)
 {
-	int		count;
-	char	*line;
+	if (ft_strlen(line) >= 2)
+	{
+		if (line[0] == '#' && line[1] == '#')
+			parse_command(data, line);
+		if (line[0] == '#' && line[1] != '#')
+			parse_comments(data, line);
+		if (line[0] != '#' && !strchr(line, '-'))
+			parse_room(data, line);
+		else
+			parse_link(data, line);
+	}
+	else
+		return (err_massage(ft_strcat(
+				"Error. Not a valid line at ", ft_itoa(data->num_line)), 4));
+	return (0);
+}
 
-	count = 0;
-	while (get_next_line(data->fd, &line))
-		data->ants = num_ants(line);
+int		read_map(t_data *data)
+{
+	char	*line;
+	int		err;
+
+	get_next_line(data->fd, &line);
+	err = num_ants(data, line);
+	if (err != 0)
+		return (err);
+	data->num_line++;
 	ft_strdel(&line);
 	while (get_next_line(data->fd, &line))
 	{
-		count++;
-//		read_line(data);
+		err = define_line(data, line);
+		if (err != 0)
+			return (err);
+		data->num_line++;
 	}
+	return (0);
 }

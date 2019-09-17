@@ -20,7 +20,8 @@ SRCS = lem-in.c \
 		lst_tools.c \
 		reader.c \
 		validator.c \
-		error_management.c
+		error_management.c \
+		parser.c
 
 OBJ = lem-in.o
 
