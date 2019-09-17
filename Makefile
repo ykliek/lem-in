@@ -16,13 +16,11 @@ FLAGS = -Wall -Werror -Wextra
 
 LIB = libft/libft.a
 
-SRCS = lem-in.c \
+SRCS = main.c \
 		lst_tools.c \
 		reader.c \
 		validator.c \
 		error_management.c
-
-OBJ = lem-in.o
 
 INCLUDE = lem-in.h
 
@@ -30,7 +28,7 @@ all: $(NAME)
 
 $(NAME):
 	@make -C libft
-	clang $(SRCS) $(LIB) -o $(NAME)
+	clang $(FLAGS) $(SRCS) $(LIB) -o $(NAME)
 
 clean:
 	@rm -rf $(OBJ)
