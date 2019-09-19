@@ -31,7 +31,7 @@ all: $(NAME)
 
 $(NAME):
 	@make -C libft
-	clang $(SRCS) $(LIB) -o $(NAME)
+	@clang $(SRCS) $(LIB) -o $(NAME)
 
 clean:
 	@rm -rf $(OBJ)

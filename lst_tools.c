@@ -44,14 +44,14 @@ void	delete_dblist(t_dblist **list)
  * Додавання нового елементу в початок списку
  */
 
-void	push_front(t_dblist *list, t_node *node)
+void	push_front(t_dblist *list, t_room *room)
 {
 	t_anthill	*tmp;
 
 	tmp = (t_anthill*)malloc(sizeof(t_anthill));
 	if (tmp == NULL)
 		exit (1);
-	tmp->node = node;
+	tmp->room = room;
 	tmp->next = list->head;
 	tmp->prev = NULL;
 	if (list->head)
@@ -66,14 +66,14 @@ void	push_front(t_dblist *list, t_node *node)
  * Додавання нового елемента в кінець списку
  */
 
-void	push_back(t_dblist *list, t_node *node)
+void	push_back(t_dblist *list, t_room *room)
 {
 	t_anthill	*tmp;
 
 	tmp = (t_anthill*)malloc(sizeof(t_anthill));
 	if (tmp == NULL)
 		exit(2);
-	tmp->node = node;
+	tmp->room = room;
 	tmp->next = NULL;
 	tmp->prev = list->tail;
 	if (list->tail)
@@ -88,7 +88,7 @@ void	push_back(t_dblist *list, t_node *node)
  * Пошук n-го елементу списку
  */
 
-t_anthill	*get_node(t_dblist *list, int i)
+t_anthill	*get_room(t_dblist *list, int i)
 {
 	t_anthill	*tmp;
 	int 		count;

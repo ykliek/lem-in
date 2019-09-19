@@ -92,8 +92,8 @@ HEADERS = libft.h
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(CFLSGS) $(SRC) $(HEADERS)
-	ar rc $(NAME) $(FILE_FOR_LIB)
+	@$(CC) $(CFLSGS) $(SRC) $(HEADERS)
+	@ar rc $(NAME) $(FILE_FOR_LIB)
 
 clean:
 	@rm -f $(FILE_FOR_LIB)

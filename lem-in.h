@@ -30,32 +30,29 @@
  * 		2 - Not enough arguments
  * 		3 - Incorrect number of ants
  * 		4 - Not a valid line
+ * 		5 - Not a valid room name
  */
 
 enum
 {
 	ROOM,
-	COMMAND,
-	COMMENT,
-	LINK
+	X,
+	Y
 };
-
-typedef struct			s_node
-{
-	int ugit;
-}						t_node;
 
 typedef struct			s_room
 {
 	int		x;
 	int		y;
+	int		start;
+	int		end;
 	char	*name;
 	char	*inside;
 }						t_room;
 
 typedef struct			s_anthill
 {
-	t_node				*node;
+	t_room				*room;
 	struct s_anthill	*next;
 	struct s_anthill	*prev;
 }						t_anthill;
@@ -82,13 +79,13 @@ typedef struct			s_data
 
 t_dblist				*create_dblist();
 
-t_anthill				*get_node(t_dblist *list, int i);
+t_anthill				*get_room(t_dblist *list, int i);
 
 void					delete_dblist(t_dblist **list);
 
-void					push_front(t_dblist *list, t_node *node);
+void					push_front(t_dblist *list, t_room *room);
 
-void					push_back(t_dblist *list, t_node *node);
+void					push_back(t_dblist *list, t_room *room);
 
 /*
  * reader.c

@@ -20,7 +20,7 @@ int		num_ants(t_data *data, char *line)
 	count = 0;
 	while (line[count] != '\0')
 	{
-		if (line[count] > '0' && line[count] < '9')
+		if (line[count] < '0' || line[count] > '9')
 			return (err_massage("Error. Incorrect number of ants", 3));
 		count++;
 	}
@@ -57,6 +57,7 @@ int		read_map(t_data *data)
 	int		err;
 
 	get_next_line(data->fd, &line);
+	data->num_line = 1;
 	err = num_ants(data, line);
 	if (err != 0)
 		return (err);
