@@ -69,6 +69,7 @@ int		read_map(t_data *data)
 		if (err != 0)
 			return (err);
 		data->num_line++;
+		free(line);
 	}
 	return (0);
 }

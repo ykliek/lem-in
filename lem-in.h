@@ -55,14 +55,14 @@ typedef struct			s_anthill
 	t_room				*room;
 	struct s_anthill	*next;
 	struct s_anthill	*prev;
-}						t_anthill;
+}						t_anthill; // Node
 
 typedef struct			s_dblist
 {
 	int 				size;
 	t_anthill			*head;
 	t_anthill			*tail;
-}						t_dblist;
+}						t_dblist; // DBLinkedList
 
 
 typedef struct			s_data

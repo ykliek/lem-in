@@ -40,21 +40,21 @@ int		parse_room_coord(t_data *data, t_room *room, char **split_room)
 	{
 		if (split_room[X][0] < '0' || split_room[X][0] > '9')
 			return (err_massage(ft_strcat("Error. Not a valid room coord at ",
-										  ft_itoa(data->num_line)), 5));
+					ft_itoa(data->num_line)), 5));
 	}
 	else
 		return (err_massage(ft_strcat("Error. Not a valid room coord at ",
-									  ft_itoa(data->num_line)), 5));
+				ft_itoa(data->num_line)), 5));
 	room->x = ft_atoi(split_room[X]);
 	if (split_room[Y])
 	{
 		if (split_room[Y][0] < '0' || split_room[Y][0] > '9')
 			return (err_massage(ft_strcat("Error. Not a valid room coord at ",
-										  ft_itoa(data->num_line)), 5));
+					ft_itoa(data->num_line)), 5));
 	}
 	else
 		return (err_massage(ft_strcat("Error. Not a valid room coord at ",
-									  ft_itoa(data->num_line)), 5));
+				ft_itoa(data->num_line)), 5));
 	room->y = ft_atoi(split_room[Y]);
 	return (0);
 }
@@ -68,7 +68,7 @@ int		parse_room(t_data *data, char *line)
 	split_room = ft_strsplit(line, ' ');
 	if (split_room[ROOM][0] == 'L')
 		return (err_massage(ft_strcat("Error. Not a valid room name at ",
-									  ft_itoa(data->num_line)), 5));
+				ft_itoa(data->num_line)), 5));
 	room.name = split_room[0];
 	err = parse_room_coord(data, &room, split_room);
 	if (err != 0)
