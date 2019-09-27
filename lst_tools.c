@@ -44,7 +44,7 @@ void	delete_dblist(t_dblist **list)
  * Додавання нового елементу в початок списку
  */
 
-void	push_front(t_dblist *list, t_room *room)
+void	push_front(t_dblist *list, t_room room)
 {
 	t_anthill	*tmp;
 
@@ -66,7 +66,7 @@ void	push_front(t_dblist *list, t_room *room)
  * Додавання нового елемента в кінець списку
  */
 
-void	push_back(t_dblist *list, t_room *room)
+void	push_back(t_dblist *list, t_room room)
 {
 	t_anthill	*tmp;
 

@@ -40,19 +40,25 @@ enum
 	Y
 };
 
+enum
+{
+	START,
+	END,
+	SKIP
+};
+
 typedef struct			s_room
 {
-	int		x;
-	int		y;
-	int		start;
-	int		end;
-	char	*name;
-	char	*inside;
+	int					x;
+	int					y;
+	int					status;
+	char				*name;
+	char				*inside;
 }						t_room;
 
 typedef struct			s_anthill
 {
-	t_room				*room;
+	t_room				room;
 	struct s_anthill	*next;
 	struct s_anthill	*prev;
 }						t_anthill; // Node
@@ -69,6 +75,7 @@ typedef struct			s_data
 {
 	int					fd;
 	int					ants;
+	int					status;
 	int					num_line;
 	t_dblist			*anthill;
 }						t_data;
@@ -83,36 +90,36 @@ t_anthill				*get_room(t_dblist *list, int i);
 
 void					delete_dblist(t_dblist **list);
 
-void					push_front(t_dblist *list, t_room *room);
+void					push_front(t_dblist *list, t_room room);
 
-void					push_back(t_dblist *list, t_room *room);
+void					push_back(t_dblist *list, t_room room);
 
 /*
  * reader.c
  */
 
-int						read_map(t_data *data);
+void					read_map(t_data *data);
 
-int						define_line(t_data *data, char *line);
+void					define_line(t_data *data, char *line);
 
-int						num_ants(t_data *data, char *line);
+void					num_ants(t_data *data, char *line);
 
 /*
  * error_management.c
  */
 
-int						err_massage(char *massage, int err);
+void					err_massage(char *massage, int err);
 
 /*
  * parser.c
  */
 
-int						parse_command(t_data *data, char *line);
+void					parse_command(t_data *data, char *line);
 
-int						parse_comments(t_data *data, char *line);
+void					parse_comments(t_data *data, char *line);
 
-int						parse_room(t_data *data, char *line);
+void					parse_room(t_data *data, char *line);
 
-int						parse_link(t_data *data, char *line);
+void					parse_link(t_data *data, char *line);
 
 #endif
