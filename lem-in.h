@@ -47,10 +47,44 @@ enum
 	SKIP
 };
 
+enum
+{
+	Unchecked,
+	Visited,
+	Finished
+};
+
+/*
+ * Room visit status:
+ * 		0 - Unchecked
+ * 		1 - Visited
+ * 		2 - Finished
+ */
+
+typedef struct			s_link
+{
+	char				*room_1;
+	char				*room_2;
+}						t_link;
+
+typedef struct			s_links_node
+{
+	t_link				link;
+	struct s_links_node	*next;
+}						t_links_node;
+
+typedef struct			s_links
+{
+	int					size;
+	t_links_node		*head;
+	t_links_node		*tail;
+}						t_links;
+
 typedef struct			s_room
 {
 	int					x;
 	int					y;
+	int					visit_status;
 	int					status;
 	char				*name;
 	char				*inside;
@@ -78,6 +112,7 @@ typedef struct			s_data
 	int					status;
 	int					num_line;
 	t_dblist			*anthill;
+	t_links				*links;
 }						t_data;
 
 /*
