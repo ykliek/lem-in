@@ -75,5 +75,22 @@ void	parse_room(t_data *data, char *line)
 
 void parse_link(t_data *data, char *line)
 {
+	t_link	link;
+	char	**split_link;
 
+	split_link = ft_strsplit(line, '-');
+	if (split_link[LINK_1])
+	{
+		room_exist(data, split_link[LINK_1]);
+		link.room_1 = ft_strdup(split_link[LINK_1]);
+		if (split_link[LINK_2])
+		{
+			room_exist(data, split_link[LINK_2]);
+			link.room_2 = ft_strdup(split_link[LINK_2]);
+			if (split_link[ERROR])
+				err_massage(ft_strcat("Error. No path at ",
+									  ft_itoa(data->num_line)), 5);
+			list_push(data->links, link);
+		}
+	}
 }

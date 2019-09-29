@@ -12,7 +12,7 @@
 
 #include "lem-in.h"
 
-void	printList(t_dblist *list)
+void	printDBList(t_dblist *list)
 {
 	t_anthill *tmp;
 
@@ -26,6 +26,18 @@ void	printList(t_dblist *list)
 	ft_printf("\n");
 }
 
+void	printList(t_links *links)
+{
+	t_links_node *tmp;
+
+	tmp = links->head;
+	while (tmp)
+	{
+		ft_printf("%s ---- %s\n", tmp->link.room_1, tmp->link.room_2);
+		tmp = tmp->next;
+	}
+}
+
 int		main(int argc, char **argv)
 {
 	t_data	data;
@@ -37,11 +49,15 @@ int		main(int argc, char **argv)
 		data.fd = fd;
 		data.status = 3;
 		data.anthill = create_dblist();
+		data.links = create_list();
 		read_map(&data);
 	}
 	else
 		argc > 2 ? err_massage("To many arguments", 1) : err_massage(
 			"Not enough arguments", 2);
-	printList(data.anthill);
+
+	printDBList(data.anthill);
+	printList(data.links);
+
 	return (0);
 }

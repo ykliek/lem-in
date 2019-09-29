@@ -31,6 +31,8 @@
  * 		3 - Incorrect number of ants
  * 		4 - Not a valid line
  * 		5 - Not a valid room name
+ * 		6 - Linked room is not exist
+ * 		7 - No path
  */
 
 enum
@@ -38,6 +40,13 @@ enum
 	ROOM,
 	X,
 	Y
+};
+
+enum
+{
+	LINK_1,
+	LINK_2,
+	ERROR
 };
 
 enum
@@ -90,19 +99,27 @@ typedef struct			s_room
 	char				*inside;
 }						t_room;
 
+/*
+ * Node
+ */
+
 typedef struct			s_anthill
 {
 	t_room				room;
 	struct s_anthill	*next;
 	struct s_anthill	*prev;
-}						t_anthill; // Node
+}						t_anthill;
+
+/*
+ * DBLinkedList
+ */
 
 typedef struct			s_dblist
 {
 	int 				size;
 	t_anthill			*head;
 	t_anthill			*tail;
-}						t_dblist; // DBLinkedList
+}						t_dblist;
 
 
 typedef struct			s_data
@@ -116,7 +133,7 @@ typedef struct			s_data
 }						t_data;
 
 /*
- * lst_tools.c
+ * dblst_tools.c
  */
 
 t_dblist				*create_dblist();
@@ -128,6 +145,16 @@ void					delete_dblist(t_dblist **list);
 void					push_front(t_dblist *list, t_room room);
 
 void					push_back(t_dblist *list, t_room room);
+
+/*
+ * lst_tools.c
+ */
+
+t_links					*create_list();
+
+void					list_push(t_links *lt, t_link link);
+
+void					list_push_back(t_links *lt, t_link link);
 
 /*
  * reader.c
@@ -156,5 +183,11 @@ void					parse_comments(t_data *data, char *line);
 void					parse_room(t_data *data, char *line);
 
 void					parse_link(t_data *data, char *line);
+
+/*
+ * validator.c
+ */
+
+void					room_exist(t_data *data, char *room);
 
 #endif

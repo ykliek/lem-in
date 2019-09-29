@@ -37,9 +37,9 @@ void	define_line(t_data *data, char *line)
 	{
 		if (line[0] == '#' && line[1] == '#')
 			parse_command(data, line);
-		if (line[0] == '#' && line[1] != '#')
+		else if (line[0] == '#' && line[1] != '#')
 			parse_comments(data, line);
-		if (line[0] != '#' && !strchr(line, '-'))
+		else if (line[0] != '#' && !strchr(line, '-'))
 			parse_room(data, line);
 		else
 			parse_link(data, line);
