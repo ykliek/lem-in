@@ -19,7 +19,7 @@ LIB = libft/libft.a
 SRCS = lem-in.c \
 		lst_tools.c \
 		reader.c \
-		validator.c \
+		validation.c \
 		error_management.c \
 		parser.c \
 		dblst_tools.c

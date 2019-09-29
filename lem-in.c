@@ -26,18 +26,6 @@ void	printDBList(t_dblist *list)
 	ft_printf("\n");
 }
 
-void	printList(t_links *links)
-{
-	t_links_node *tmp;
-
-	tmp = links->head;
-	while (tmp)
-	{
-		ft_printf("%s ---- %s\n", tmp->link.room_1, tmp->link.room_2);
-		tmp = tmp->next;
-	}
-}
-
 int		main(int argc, char **argv)
 {
 	t_data	data;
@@ -49,7 +37,6 @@ int		main(int argc, char **argv)
 		data.fd = fd;
 		data.status = 3;
 		data.anthill = create_dblist();
-		data.links = create_list();
 		read_map(&data);
 	}
 	else
@@ -57,7 +44,6 @@ int		main(int argc, char **argv)
 			"Not enough arguments", 2);
 
 	printDBList(data.anthill);
-	printList(data.links);
 
 	return (0);
 }

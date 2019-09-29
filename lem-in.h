@@ -59,16 +59,20 @@ enum
 enum
 {
 	Unchecked,
-	Visited,
+	Checked,
 	Finished
 };
 
 /*
  * Room visit status:
  * 		0 - Unchecked
- * 		1 - Visited
+ * 		1 - Checked
  * 		2 - Finished
  */
+
+typedef struct			s_dblist	t_dblist;
+
+typedef struct			s_room	t_room;
 
 typedef struct			s_link
 {
@@ -76,27 +80,15 @@ typedef struct			s_link
 	char				*room_2;
 }						t_link;
 
-typedef struct			s_links_node
-{
-	t_link				link;
-	struct s_links_node	*next;
-}						t_links_node;
-
-typedef struct			s_links
-{
-	int					size;
-	t_links_node		*head;
-	t_links_node		*tail;
-}						t_links;
-
 typedef struct			s_room
 {
 	int					x;
 	int					y;
-	int					visit_status;
-	int					status;
 	char				*name;
+	int					status;
 	char				*inside;
+	t_dblist			*links;
+	int					visit_status;
 }						t_room;
 
 /*
@@ -129,7 +121,6 @@ typedef struct			s_data
 	int					status;
 	int					num_line;
 	t_dblist			*anthill;
-	t_links				*links;
 }						t_data;
 
 /*
@@ -145,16 +136,6 @@ void					delete_dblist(t_dblist **list);
 void					push_front(t_dblist *list, t_room room);
 
 void					push_back(t_dblist *list, t_room room);
-
-/*
- * lst_tools.c
- */
-
-t_links					*create_list();
-
-void					list_push(t_links *lt, t_link link);
-
-void					list_push_back(t_links *lt, t_link link);
 
 /*
  * reader.c
@@ -187,7 +168,5 @@ void					parse_link(t_data *data, char *line);
 /*
  * validator.c
  */
-
-void					room_exist(t_data *data, char *room);
 
 #endif

@@ -25,23 +25,3 @@
  * 		8. Always must be ##start and ##end
  * 		9. Any unknown will be ignored
  */
-
-void	room_exist(t_data *data, char *room)
-{
-	t_anthill	*find_base;
-	int			count;
-
-	count = 0;
-	find_base = data->anthill->head;
-	while (find_base)
-	{
-		if (ft_strcmp(find_base->room.name, room) == 0)
-		{
-			count = 1;
-			break;
-		}
-		find_base = find_base->next;
-	}
-	(count == 0) ? err_massage(ft_strcat("Error. Linked room is not exist at ",
-										 ft_itoa(data->num_line)), 5) : 0;
-}
