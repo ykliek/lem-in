@@ -73,7 +73,7 @@ void	parse_room(t_data *data, char *line)
 	room->visit_status = Unchecked;
 	room->links = NULL;
 	parse_room_coord(data, room, split_room);
-	push_back(data->anthill, room);
+	push_back(data, room);
 }
 
 void	search_room(t_data *data, t_anthill *anthill, char *room)

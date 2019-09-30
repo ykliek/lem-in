@@ -35,7 +35,7 @@ int		main(int argc, char **argv)
 	{
 		fd = open(argv[1], O_RDONLY);
 		data.fd = fd;
-		data.status = 3;
+		data.status = -1;
 		data.anthill = create_dblist();
 		read_map(&data);
 	}

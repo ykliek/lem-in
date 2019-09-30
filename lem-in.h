@@ -63,6 +63,13 @@ enum
 	Finished
 };
 
+enum
+{
+	GREY_PATH,
+	GREEN_PATH,
+	LOCK_ROOM
+};
+
 /*
  * Room visit status:
  * 		0 - Unchecked
@@ -88,6 +95,7 @@ typedef struct			s_room
 	int					y;
 	char				*name;
 	int					status;
+	int					color;
 	t_anthill			*previous;
 	char				*inside;
 	t_dblist			*links;
@@ -103,6 +111,8 @@ typedef struct			s_anthill
 	t_room				*room;
 	struct s_anthill	*next;
 	struct s_anthill	*prev;
+	struct s_anthill	*start;
+	struct s_anthill	*end;
 }						t_anthill;
 
 /*
@@ -120,6 +130,7 @@ typedef struct			s_dblist
 typedef struct			s_data
 {
 	int					fd;
+	int					find;
 	int					ants;
 	int					links_start;
 	int					links_end;
@@ -136,9 +147,9 @@ t_dblist				*create_dblist();
 
 void					delete_dblist(t_dblist **list);
 
-void					push_front(t_dblist *list, t_room *room);
+void					push_front(t_data *list, t_room *room);
 
-void					push_back(t_dblist *list, t_room *room);
+void					push_back(t_data *list, t_room *room);
 
 /*
  * reader.c
