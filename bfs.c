@@ -30,18 +30,36 @@
  * Fourth.
  */
 
-void		find_shortest(t_data *data)
+void DFS(t_anthill *start, t_anthill *previous)
 {
-	t_anthill *rooms;
-
-	rooms = data->anthill->head;
-	while (rooms)
+	if (start->room->visit_status == Checked)
+		return ;
+	start->room->visit_status = Checked;
+	start->room->previous = previous;
+	if (start->room->status == END) {
+		return;
+	}
+	while (start->room->links->head)
 	{
-		if (rooms->room.status == START)
-		{
-
-		}
-		rooms = rooms->next;
+		DFS(start->room->links->head, start);
+		start->room->links->head
+		= start->room->links->head->next;
 	}
 }
 
+void		find_start(t_data *data)
+{
+	t_anthill *tmp;
+
+	tmp = data->anthill->head;
+	while (data->anthill->head)
+	{
+		if (data->anthill->head->room->status == START)
+		{
+
+			break ;
+		}
+			data->anthill->head = data->anthill->head->next;
+	}
+	data->anthill->head = tmp;
+}

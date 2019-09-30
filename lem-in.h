@@ -72,7 +72,9 @@ enum
 
 typedef struct			s_dblist	t_dblist;
 
-typedef struct			s_room	t_room;
+typedef struct			s_room		t_room;
+
+typedef struct			s_anthill	t_anthill;
 
 typedef struct			s_link
 {
@@ -86,6 +88,7 @@ typedef struct			s_room
 	int					y;
 	char				*name;
 	int					status;
+	t_anthill			*previous;
 	char				*inside;
 	t_dblist			*links;
 	int					visit_status;
@@ -97,7 +100,7 @@ typedef struct			s_room
 
 typedef struct			s_anthill
 {
-	t_room				room;
+	t_room				*room;
 	struct s_anthill	*next;
 	struct s_anthill	*prev;
 }						t_anthill;
@@ -118,6 +121,8 @@ typedef struct			s_data
 {
 	int					fd;
 	int					ants;
+	int					links_start;
+	int					links_end;
 	int					status;
 	int					num_line;
 	t_dblist			*anthill;
@@ -129,13 +134,11 @@ typedef struct			s_data
 
 t_dblist				*create_dblist();
 
-t_anthill				*get_room(t_dblist *list, int i);
-
 void					delete_dblist(t_dblist **list);
 
-void					push_front(t_dblist *list, t_room room);
+void					push_front(t_dblist *list, t_room *room);
 
-void					push_back(t_dblist *list, t_room room);
+void					push_back(t_dblist *list, t_room *room);
 
 /*
  * reader.c
@@ -168,5 +171,7 @@ void					parse_link(t_data *data, char *line);
 /*
  * validator.c
  */
+
+void					find_start(t_data *data);
 
 #endif

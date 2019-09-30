@@ -19,8 +19,8 @@ void	printDBList(t_dblist *list)
 	tmp = list->head;
 	while (tmp)
 	{
-		ft_printf("%d == %d == %d == %s\n", tmp->room.x, tmp->room.y,
-				tmp->room.status, tmp->room.name);
+		ft_printf("%d == %d == %d == %s\n", tmp->room->x, tmp->room->y,
+				tmp->room->status, tmp->room->name);
 		tmp = tmp->next;
 	}
 	ft_printf("\n");
@@ -43,6 +43,7 @@ int		main(int argc, char **argv)
 		argc > 2 ? err_massage("To many arguments", 1) : err_massage(
 			"Not enough arguments", 2);
 
+	find_start(&data);
 	printDBList(data.anthill);
 
 	return (0);
