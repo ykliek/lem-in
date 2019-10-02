@@ -61,7 +61,6 @@ void	read_map(t_data *data)
 	while (get_next_line(data->fd, &line))
 	{
 		define_line(data, line);
-		data->status++;
 		data->num_line++;
 	}
 }

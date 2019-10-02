@@ -35,7 +35,9 @@ int		main(int argc, char **argv)
 	{
 		fd = open(argv[1], O_RDONLY);
 		data.fd = fd;
-		data.status = -1;
+		data.status = 2;
+		data.nodes = 0;
+		data.count = 0;
 		data.anthill = create_dblist();
 		read_map(&data);
 	}
@@ -43,7 +45,7 @@ int		main(int argc, char **argv)
 		argc > 2 ? err_massage("To many arguments", 1) : err_massage(
 			"Not enough arguments", 2);
 
-	find_start(&data);
+	find_start(data);
 	printDBList(data.anthill);
 
 	return (0);

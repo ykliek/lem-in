@@ -23,6 +23,17 @@ t_dblist	*create_dblist()
 	return (tmp);
 }
 
+t_anthill	*create_list(t_room *room)
+{
+	t_anthill	*tmp;
+
+	tmp = (t_anthill*)malloc(sizeof(t_anthill));
+	tmp->room = room;
+	tmp->next = NULL;
+	tmp->prev = NULL;
+	return (tmp);
+}
+
 void	delete_dblist(t_dblist **list)
 {
 	t_anthill	*tmp;
@@ -44,7 +55,7 @@ void	delete_dblist(t_dblist **list)
  * Додавання нового елементу в початок списку
  */
 
-void	push_front(t_data *list, t_room *room)
+void	push_front(t_dblist *list, t_room *room)
 {
 	t_anthill	*tmp;
 
@@ -52,21 +63,21 @@ void	push_front(t_data *list, t_room *room)
 	if (tmp == NULL)
 		exit (1);
 	tmp->room = room;
-	tmp->next = list->anthill->head;
+	tmp->next = list->head;
 	tmp->prev = NULL;
-	if (list->anthill->head)
-		list->anthill->head->prev = tmp;
-	list->anthill->head = tmp;
-	if (list->anthill->tail == NULL)
-		list->anthill->tail = tmp;
-	list->anthill->size++;
+	if (list->head)
+		list->head->prev = tmp;
+	list->head = tmp;
+	if (list->tail == NULL)
+		list->tail = tmp;
+	list->size++;
 }
 
 /*
  * Додавання нового елемента в кінець списку
  */
 
-void	push_back(t_data *list, t_room *room)
+void	push_back(t_dblist *list, t_room *room)
 {
 	t_anthill	*tmp;
 
@@ -75,11 +86,11 @@ void	push_back(t_data *list, t_room *room)
 		exit(2);
 	tmp->room = room;
 	tmp->next = NULL;
-	tmp->prev = list->anthill->tail;
-	if (list->anthill->tail)
-		list->anthill->tail->next = tmp;
-	list->anthill->tail = tmp;
-	if (list->anthill->head == NULL)
-		list->anthill->head = tmp;
-	list->anthill->size++;
+	tmp->prev = list->tail;
+	if (list->tail)
+		list->tail->next = tmp;
+	list->tail = tmp;
+	if (list->head == NULL)
+		list->head = tmp;
+	list->size++;
 }

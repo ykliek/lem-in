@@ -30,80 +30,97 @@
  * Fourth.
  */
 
-void	get_path(t_data *data)
+int		get_path(t_data data, t_room *room)
 {
-	t_anthill	*tmp;
-
-	tmp = data->anthill->tail;
-	while (data->anthill->tail && data->anthill->tail != data->anthill->head)
+	room->id = room->visit_status;
+	room->visit_status = Finished;
+	if (room == data.anthill->end->room)
+		return (1);
+	if (room->previous)
 	{
-		data->anthill->tail->room->previous->room->color = GREEN_PATH;
-		data->anthill->tail = data->anthill->tail->room->previous;
+		room->distance = get_path(data ,room->previous) + 1;
 	}
-	data->anthill->tail = tmp;
+	return (room->distance);
 }
 
-void	clean_marks(t_data *data)
+t_room	*dequeued(t_anthill **front)
 {
-	t_anthill	*tmp;
+	t_anthill	*free;
+	t_room		*room;
 
-	tmp = data->anthill->tail;
-	while(data->anthill->tail)
-	{
-		data->anthill->tail->room->visit_status = Unchecked;
-		data->anthill->tail = data->anthill->tail->prev;
-	}
-	data->anthill->tail = tmp;
+	if (*front == NULL)
+		return (NULL);
+	free = *front;
+	room = (*front)->room;
+	*front = (*front) ->next;
+	return (room);
 }
 
-void	DFS(t_data *data, t_anthill *start, t_anthill *previous)
+void	enqueue(t_anthill **tmp, t_anthill **front, t_room *data)
 {
-	if (start->room->visit_status == Checked)
-		return ;
-	if (start->room->color == GREEN_PATH)
+	t_anthill	*current;
+
+	current = create_list(data);
+	if (*tmp != NULL)
+		(*tmp)->next = current;
+	*tmp = current;
+	if (*front == NULL)
+		*front = current;
+}
+
+t_room	*DFS(t_data data, t_room *end, int status)
+{
+	t_anthill	*front;
+	t_anthill	*tmp;
+	t_anthill	*pipes;
+	t_room		*room;
+
+	front = NULL;
+	tmp = NULL;
+	enqueue(&tmp, &front, end);
+	while (front != NULL)
 	{
-		start->room->color = LOCK_ROOM;
-		return ;
-	}
-	start->room->visit_status = Checked;
-	start->room->previous = previous;
-	if (start->room->status == END)
-	{
-		data->find = 1;
-		get_path(data);
-		return ;
-	}
-	while (start->room->links->head)
-	{
-		if (data->find == 1)
+		room = dequeued(&front);
+		room->visit_status = status;
+		if (room == data.anthill->start->room)
 		{
-			data->find = 0;
-			clean_marks(data);
+			get_path(data, room->previous);
+			return (room->previous);
 		}
-			DFS(data, start->room->links->head, start);
-		start->room->links->head
-		= start->room->links->head->next;
-	}
-}
-
-void		find_start(t_data *data)
-{
-	t_anthill *tmp;
-
-	tmp = data->anthill->head;
-	while (data->anthill->head)
-	{
-		if (data->anthill->head->room->status == START)
+		pipes = room->links->head;
+		while (pipes)
 		{
-			while (1)
+			if (pipes->room->visit_status != status && pipes->room->visit_status != Finished)
 			{
-				DFS(data, data->anthill->head, data->anthill->head);
-				if (data->find == 0)
-					break ;
+				pipes->room->previous = room;
+				pipes->room->visit_status = status;
+				enqueue(&tmp, &front, pipes->room);
 			}
-			break ;
+			pipes = pipes->next;
 		}
-			data->anthill->head = data->anthill->head->next;
 	}
-	data->anthill->head = tmp;
+	return (NULL);
+}
+
+void		find_start(t_data data)
+{
+	int		status;
+	t_room		*road;
+	t_dblist	*roads;
+
+	status = 1;
+	roads = NULL;
+	while ((road = DFS(data, data.anthill->end->room, status)))
+	{
+		if (roads == NULL)
+		{
+			roads = create_dblist();
+			push_back(roads, road);
+		}
+		else
+			push_back(roads, road);
+		if  (road == data.anthill->end->room)
+			break ;
+		status++;
+	}
 }

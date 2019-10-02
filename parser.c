@@ -58,6 +58,30 @@ void	parse_room_coord(t_data *data, t_room *room, char **split_room)
 	room->y = ft_atoi(split_room[Y]);
 }
 
+void	put_end_start(t_data *data)
+{
+	if (data->status == START)
+	{
+		if (data->anthill->tail->prev)
+		{
+			if (data->anthill->tail->prev->room->status != START)
+				data->anthill->start = data->anthill->tail;
+		}
+		else
+			data->anthill->start = data->anthill->tail;
+	}
+	if (data->status == END)
+	{
+		if (data->anthill->tail->prev)
+		{
+			if (data->anthill->tail->prev->room->status != END)
+				data->anthill->end = data->anthill->tail;
+		}
+		else
+			data->anthill->end = data->anthill->tail;
+	}
+}
+
 void	parse_room(t_data *data, char *line)
 {
 	t_room	*room;
@@ -70,10 +94,11 @@ void	parse_room(t_data *data, char *line)
 				ft_itoa(data->num_line)), 5);
 	room->name = ft_strdup(split_room[0]);
 	room->status = data->status;
-	room->visit_status = Unchecked;
+	room->visit_status = 0;
 	room->links = NULL;
 	parse_room_coord(data, room, split_room);
-	push_back(data, room);
+	push_back(data->anthill, room);
+	put_end_start(data);
 }
 
 void	search_room(t_data *data, t_anthill *anthill, char *room)
@@ -113,6 +138,7 @@ void	find_rooms_links(t_data *data, t_link link)
 			search_room(data, tmp, link.room_1);
 		data->anthill->head = data->anthill->head->next;
 	}
+	data->nodes++;
 	data->anthill->head = tmp;
 }
 
@@ -135,10 +161,3 @@ void	parse_link(t_data *data, char *line)
 		}
 	}
 }
-
-/*
- * TODO:
- *		make reload all values in links of rooms like:
- *			if anthill->head->room.name == anthill->head->room->link->room.name
- *				anthill->head->room->link->room = anthill->head->room
- */
