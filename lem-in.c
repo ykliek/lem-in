@@ -26,27 +26,36 @@ void	printDBList(t_dblist *list)
 	ft_printf("\n");
 }
 
+void	structure_init(t_data *data)
+{
+	data->status = 2;
+	data->nodes = 0;
+	data->count = 0;
+	data->anthill = create_dblist();
+}
+
 int		main(int argc, char **argv)
 {
 	t_data	data;
+	t_dblist *roads;
+	t_anthill*tmp;
 	int		fd;
 
 	if (argc == 2)
 	{
 		fd = open(argv[1], O_RDONLY);
 		data.fd = fd;
-		data.status = 2;
-		data.nodes = 0;
-		data.count = 0;
-		data.anthill = create_dblist();
+		structure_init(&data);
 		read_map(&data);
+		roads = run_algorithm(data);
+		if (roads)
+			tmp = roads->head;
+		else
+			err_massage("There is no way... !!!", 7);
+		go_ants(tmp, &data);
 	}
 	else
 		argc > 2 ? err_massage("To many arguments", 1) : err_massage(
 			"Not enough arguments", 2);
-
-	find_start(data);
-	printDBList(data.anthill);
-
 	return (0);
 }

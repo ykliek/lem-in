@@ -26,7 +26,7 @@ void	parse_command(t_data *data, char *line)
 	else if (ft_strcmp(ft_strdup(line + 2), "end") == 0)
 		data->status = END;
 	else
-		data->status = SKIP;
+		data->status = data->status;
 }
 
 void	parse_comments(t_data *data, char *line)

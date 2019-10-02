@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bfs.c                                              :+:      :+:    :+:   */
+/*   roads_handler.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykliek <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -11,24 +11,6 @@
 /* ************************************************************************** */
 
 #include "lem-in.h"
-
-/*
- * TODO: algorithm logic
- *		First. Find the shortest way from start to finish and make it green.
- *		Second. Find all another ways that go to finish or connects with way
- *		first stage:
- *		If connect find rooms that don't belong to first way and try to make
- *		another way.
- *		else make eay green.
- *		Third. Find all ways that don't intersect each other.
- */
-
-/*
- * First. Go to the end point
- * Second. Go to the intersect with first way.
- * Third. Find in intersect rooms, rooms that don't belong to first way.
- * Fourth.
- */
 
 int		get_path(t_data data, t_room *room)
 {
@@ -45,12 +27,10 @@ int		get_path(t_data data, t_room *room)
 
 t_room	*dequeued(t_anthill **front)
 {
-	t_anthill	*free;
-	t_room		*room;
+	t_room	*room;
 
 	if (*front == NULL)
 		return (NULL);
-	free = *front;
 	room = (*front)->room;
 	*front = (*front) ->next;
 	return (room);
@@ -68,7 +48,7 @@ void	enqueue(t_anthill **tmp, t_anthill **front, t_room *data)
 		*front = current;
 }
 
-t_room	*DFS(t_data data, t_room *end, int status)
+t_room	*roads_handler(t_data data, t_room *end, int status)
 {
 	t_anthill	*front;
 	t_anthill	*tmp;
@@ -87,7 +67,10 @@ t_room	*DFS(t_data data, t_room *end, int status)
 			get_path(data, room->previous);
 			return (room->previous);
 		}
-		pipes = room->links->head;
+		if (room->links)
+			pipes = room->links->head;
+		else
+			pipes = NULL;
 		while (pipes)
 		{
 			if (pipes->room->visit_status != status && pipes->room->visit_status != Finished)
@@ -102,15 +85,15 @@ t_room	*DFS(t_data data, t_room *end, int status)
 	return (NULL);
 }
 
-void		find_start(t_data data)
+t_dblist	*run_algorithm(t_data data)
 {
-	int		status;
+	int			status;
 	t_room		*road;
 	t_dblist	*roads;
 
 	status = 1;
 	roads = NULL;
-	while ((road = DFS(data, data.anthill->end->room, status)))
+	while ((road = roads_handler(data, data.anthill->end->room, status)))
 	{
 		if (roads == NULL)
 		{
@@ -123,4 +106,5 @@ void		find_start(t_data data)
 			break ;
 		status++;
 	}
+	return (roads);
 }

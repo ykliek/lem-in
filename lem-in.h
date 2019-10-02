@@ -13,18 +13,10 @@
 #ifndef LEM_IN_H
 # define LEM_IN_H
 
-#include "libft/libft.h"
-
-#include <stdio.h> // TODO: delete
+# include "libft/libft.h"
 # include <limits.h>
 
 #define Finished INT_MAX
-
-/*
- * TODO:
- * 		1. Make all structure clear and comfortable to use;
- * 		2. Organize two dimensional structure with end and start and all necessary information
- */
 
 /*
  * Error codes:
@@ -59,13 +51,6 @@ enum
 	SKIP
 };
 
-enum
-{
-	GREY_PATH,
-	GREEN_PATH,
-	LOCK_ROOM
-};
-
 /*
  * Room visit status:
  * 		0 - Unchecked
@@ -94,7 +79,7 @@ typedef struct			s_room
 	int					status;
 	int					distance;
 	t_room				*previous;
-	char				*inside;
+	int					inside;
 	t_dblist			*links;
 	int					visit_status;
 }						t_room;
@@ -127,7 +112,6 @@ typedef struct			s_dblist
 typedef struct			s_data
 {
 	int					fd;
-	int					find;
 	int					ants;
 	int					count;
 	int					nodes;
@@ -180,9 +164,11 @@ void					parse_room(t_data *data, char *line);
 void					parse_link(t_data *data, char *line);
 
 /*
- * validator.c
+ * roads_handler.c
  */
 
-void					find_start(t_data data);
+t_dblist				*run_algorithm(t_data data);
+
+void					go_ants(t_anthill *roads, t_data *data);
 
 #endif

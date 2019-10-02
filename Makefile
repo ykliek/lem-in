@@ -6,7 +6,7 @@
 #    By: ykliek <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/08/13 13:47:37 by ykliek            #+#    #+#              #
-#    Updated: 2019/08/13 13:47:39 by ykliek           ###   ########.fr        #
+#    Updated: 2019/10/02 15:11:37 by ykliek           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,13 @@ FLAGS = -Wall -Werror -Wextra
 LIB = libft/libft.a
 
 SRCS = lem-in.c \
-		lst_tools.c \
 		reader.c \
 		validation.c \
 		error_management.c \
 		parser.c \
-		dblst_tools.c
+		dblst_tools.c \
+		bfs.c \
+		go_ants.c 
 
 OBJ = lem-in.o
 
