@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 void	num_ants(t_data *data, char *line)
 {
@@ -38,29 +38,46 @@ void	define_line(t_data *data, char *line)
 		if (line[0] == '#' && line[1] == '#')
 			parse_command(data, line);
 		else if (line[0] == '#' && line[1] != '#')
-			parse_comments(data, line);
+			return ;
 		else if (line[0] != '#' && !strchr(line, '-'))
 			parse_room(data, line);
 		else
+		{
+			if (!data->anthill->head)
+				err_massage("Error. Put some rooms please", 5);
 			parse_link(data, line);
+		}
 	}
 	else
 		err_massage(ft_strcat(
 				"Error. Not a valid line at ", ft_itoa(data->num_line)), 4);
 }
 
-void	read_map(t_data *data)
+t_print	*read_map(t_data *data)
 {
 	char	*line;
+	t_print	*print;
+	t_print	*prev;
+	t_print	*list;
 
-	get_next_line(data->fd, &line);
-	data->num_line = 1;
-	num_ants(data, line);
-	data->num_line++;
-	ft_strdel(&line);
-	while (get_next_line(data->fd, &line))
+	if (get_next_line(data->fd, &line) > 0)
 	{
-		define_line(data, line);
+		print = (t_print *) malloc(sizeof(t_print));
+		print->next = NULL;
+		print->content = line;
+		prev = print;
+		data->num_line = 1;
+		num_ants(data, line);
 		data->num_line++;
+		while (get_next_line(data->fd, &line) > 0) {
+			list = (t_print *) malloc(sizeof(t_print));
+			list->next = NULL;
+			list->content = line;
+			prev->next = list;
+			prev = list;
+			define_line(data, line);
+			data->num_line++;
+		}
 	}
+	return (print);
 }

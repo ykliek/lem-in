@@ -10,28 +10,37 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
- * Command codes:
- * 	0 - start
- * 	1 - end
- * 	2 - skip
- */
+** Command codes:
+** 	0 - start
+** 	1 - end
+** 	2 - skip
+*/
 
 void	parse_command(t_data *data, char *line)
 {
-	if (ft_strcmp(ft_strdup(line + 2), "start") == 0)
+	char *tmp;
+
+	tmp = ft_strdup(line + 2);
+	if (ft_strcmp(tmp, "start") == 0)
+	{
 		data->status = START;
-	else if (ft_strcmp(ft_strdup(line + 2), "end") == 0)
+		data->check++;
+		free(tmp);
+	}
+	else if (ft_strcmp(tmp, "end") == 0)
+	{
 		data->status = END;
+		data->check++;
+		free(tmp);
+	}
 	else
+	{
 		data->status = data->status;
-}
-
-void	parse_comments(t_data *data, char *line)
-{
-
+		free(tmp);
+	}
 }
 
 void	parse_room_coord(t_data *data, t_room *room, char **split_room)
@@ -96,51 +105,17 @@ void	parse_room(t_data *data, char *line)
 	room->status = data->status;
 	room->visit_status = 0;
 	room->links = NULL;
+	room->inside = 0;
+	room->id = 0;
+	room->links = create_dblist();
+	room->previous = NULL;
 	parse_room_coord(data, room, split_room);
+	check_room(data, room);
 	push_back(data->anthill, room);
 	put_end_start(data);
+	free_2d_array(split_room);
 }
 
-void	search_room(t_data *data, t_anthill *anthill, char *room)
-{
-	t_anthill	*search;
-	int			count;
-
-	count = 0;
-	search = data->anthill->tail;
-	if (data->anthill->head->room->links == NULL)
-		data->anthill->head->room->links = create_dblist();
-	while (data->anthill->tail)
-	{
-		if (ft_strcmp(data->anthill->tail->room->name, room) == 0)
-		{
-			push_back(data->anthill->head->room->links, data->anthill->tail->room);
-			count++;
-			break ;
-		}
-		data->anthill->tail = data->anthill->tail->prev;
-	}
-	data->anthill->tail = search;
-	(count == 0) ? err_massage(ft_strcat("Error. Room not exist at ",
-			ft_itoa(data->num_line)), 5) : 0;
-}
-
-void	find_rooms_links(t_data *data, t_link link)
-{
-	t_anthill	*tmp;
-
-	tmp = data->anthill->head;
-	while(data->anthill->head)
-	{
-		if (ft_strcmp(data->anthill->head->room->name, link.room_1) == 0)
-			search_room(data, tmp, link.room_2);
-		if (ft_strcmp(data->anthill->head->room->name, link.room_2) == 0)
-			search_room(data, tmp, link.room_1);
-		data->anthill->head = data->anthill->head->next;
-	}
-	data->nodes++;
-	data->anthill->head = tmp;
-}
 
 void	parse_link(t_data *data, char *line)
 {
@@ -159,5 +134,8 @@ void	parse_link(t_data *data, char *line)
 				err_massage(ft_strcat("Error. No path at ",
 						ft_itoa(data->num_line)), 5);
 		}
+		free(link.room_1);
+		free(link.room_2);
 	}
+	free_2d_array(split_link);
 }

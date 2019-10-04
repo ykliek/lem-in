@@ -6,25 +6,11 @@
 /*   By: ykliek <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/13 13:46:28 by ykliek            #+#    #+#             */
-/*   Updated: 2019/08/13 13:47:24 by ykliek           ###   ########.fr       */
+/*   Updated: 2019/10/03 16:11:05 by ykliek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
-
-void	printDBList(t_dblist *list)
-{
-	t_anthill *tmp;
-
-	tmp = list->head;
-	while (tmp)
-	{
-		ft_printf("%d == %d == %d == %s\n", tmp->room->x, tmp->room->y,
-				tmp->room->status, tmp->room->name);
-		tmp = tmp->next;
-	}
-	ft_printf("\n");
-}
+#include "lem_in.h"
 
 void	structure_init(t_data *data)
 {
@@ -32,30 +18,49 @@ void	structure_init(t_data *data)
 	data->nodes = 0;
 	data->count = 0;
 	data->anthill = create_dblist();
+	data->check = 0;
+	data->num_line = 0;
+	data->i = 0;
+	data->fd = 0;
+	data->anthill->end = NULL;
+	data->anthill->start = NULL;
+}
+
+void	print_input(t_print *start)
+{
+	while (start)
+	{
+		ft_printf("%s\n", (char*)start->content);
+		start = start->next;
+	}
+	ft_printf("\n");
 }
 
 int		main(int argc, char **argv)
 {
-	t_data	data;
-	t_dblist *roads;
-	t_anthill*tmp;
-	int		fd;
+	t_data		data;
+	t_dblist	*roads;
+	t_anthill	*tmp;
+	t_print		*to_print;
 
-	if (argc == 2)
+	data.fd = open(argv[2], O_RDONLY);
+	structure_init(&data);
+	to_print = read_map(&data);
+	if (!data.anthill->head)
+		err_massage("Not correct file", 1);
+	print_input(to_print);
+	if (data.check != 2)
+		err_massage("Error. Check start and end position!!!", 8);
+	if (!data.anthill->end || !data.anthill->start)
+		err_massage("You have problem with start and end", 9);
+	roads = run_algorithm(data);
+	if (roads)
 	{
-		fd = open(argv[1], O_RDONLY);
-		data.fd = fd;
-		structure_init(&data);
-		read_map(&data);
-		roads = run_algorithm(data);
-		if (roads)
-			tmp = roads->head;
-		else
-			err_massage("There is no way... !!!", 7);
-		go_ants(tmp, &data);
+		tmp = roads->head;
+		go_ants(tmp, &data, tmp, define_path(tmp));
 	}
 	else
-		argc > 2 ? err_massage("To many arguments", 1) : err_massage(
-			"Not enough arguments", 2);
+		err_massage("There is no way... !!!", 7);
+	system("leaks lem-in");
 	return (0);
 }

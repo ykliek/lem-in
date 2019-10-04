@@ -238,7 +238,7 @@ only contain one ant at a time. (except at ##start and ##end which can contain
 as many ants as necessary.)
 * We consider that all the ants are in the room ##start at the beginning of the game.
 * At each turn you will only display the ants that moved.
-* At each turn you can move each ant only once and through a tube (the room at
+* At each turn you can i each ant only once and through a tube (the room at
 the receiving end must be empty).
 * You must to display your results on the standard output in the following format:
 ```text

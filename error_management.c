@@ -10,10 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
-void err_massage(char *massage, int err)
+void	err_massage(char *massage, int err)
 {
 	ft_printf("%s\n", massage);
+	err = 1;
 	exit(err);
 }

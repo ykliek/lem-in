@@ -29,5 +29,6 @@ char	*ft_strcat(char *s1, const char *s2)
 	while (s2[count_2] != '\0')
 		ret[count_1++] = s2[count_2++];
 	ret[count_1] = '\0';
+	free((char *)s2);
 	return (ret);
 }

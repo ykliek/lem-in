@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
-t_dblist	*create_dblist()
+t_dblist	*create_dblist(void)
 {
 	t_dblist	*tmp;
 
@@ -34,7 +34,7 @@ t_anthill	*create_list(t_room *room)
 	return (tmp);
 }
 
-void	delete_dblist(t_dblist **list)
+void		delete_dblist(t_dblist **list)
 {
 	t_anthill	*tmp;
 	t_anthill	*next;
@@ -51,33 +51,23 @@ void	delete_dblist(t_dblist **list)
 	(*list) = NULL;
 }
 
-/*
- * Додавання нового елементу в початок списку
- */
-
-void	push_front(t_dblist *list, t_room *room)
+void		delete_list(t_anthill **list)
 {
-	t_anthill	*tmp;
+	t_anthill *to_free;
 
-	tmp = (t_anthill*)malloc(sizeof(t_anthill));
-	if (tmp == NULL)
-		exit (1);
-	tmp->room = room;
-	tmp->next = list->head;
-	tmp->prev = NULL;
-	if (list->head)
-		list->head->prev = tmp;
-	list->head = tmp;
-	if (list->tail == NULL)
-		list->tail = tmp;
-	list->size++;
+	while (*list)
+	{
+		to_free = *list;
+		*list = (*list)->next;
+		free(to_free);
+	}
 }
 
 /*
- * Додавання нового елемента в кінець списку
- */
+** Додавання нового елемента в кінець списку
+*/
 
-void	push_back(t_dblist *list, t_room *room)
+void		push_back(t_dblist *list, t_room *room)
 {
 	t_anthill	*tmp;
 

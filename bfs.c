@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   roads_handler.c                                              :+:      :+:    :+:   */
+/*   roads_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ykliek <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,54 +10,54 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
-int		get_path(t_data data, t_room *room)
+int			get_path(t_data data, t_room *room)
 {
 	room->id = room->visit_status;
-	room->visit_status = Finished;
+	room->visit_status = FINISHED;
 	if (room == data.anthill->end->room)
 		return (1);
 	if (room->previous)
 	{
-		room->distance = get_path(data ,room->previous) + 1;
+		room->distance = get_path(data, room->previous) + 1;
 	}
 	return (room->distance);
 }
 
-t_room	*dequeued(t_anthill **front)
+void		make_pipes(t_anthill **front, t_anthill **tmp,
+		t_room *room, int status)
 {
-	t_room	*room;
+	t_anthill *pipes;
 
-	if (*front == NULL)
-		return (NULL);
-	room = (*front)->room;
-	*front = (*front) ->next;
-	return (room);
+	if (room->links)
+		pipes = room->links->head;
+	else
+		pipes = NULL;
+	while (pipes)
+	{
+		if (pipes->room->visit_status != status
+			&& pipes->room->visit_status != FINISHED)
+		{
+			pipes->room->previous = room;
+			pipes->room->visit_status = status;
+			enqueue(tmp, front, pipes->room);
+		}
+		pipes = pipes->next;
+	}
 }
 
-void	enqueue(t_anthill **tmp, t_anthill **front, t_room *data)
-{
-	t_anthill	*current;
-
-	current = create_list(data);
-	if (*tmp != NULL)
-		(*tmp)->next = current;
-	*tmp = current;
-	if (*front == NULL)
-		*front = current;
-}
-
-t_room	*roads_handler(t_data data, t_room *end, int status)
+t_room		*roads_handler(t_data data, t_room *end, int status)
 {
 	t_anthill	*front;
 	t_anthill	*tmp;
-	t_anthill	*pipes;
+	t_anthill	*test;
 	t_room		*room;
 
 	front = NULL;
 	tmp = NULL;
 	enqueue(&tmp, &front, end);
+	test = front;
 	while (front != NULL)
 	{
 		room = dequeued(&front);
@@ -65,23 +65,12 @@ t_room	*roads_handler(t_data data, t_room *end, int status)
 		if (room == data.anthill->start->room)
 		{
 			get_path(data, room->previous);
+			delete_list(&test);
 			return (room->previous);
 		}
-		if (room->links)
-			pipes = room->links->head;
-		else
-			pipes = NULL;
-		while (pipes)
-		{
-			if (pipes->room->visit_status != status && pipes->room->visit_status != Finished)
-			{
-				pipes->room->previous = room;
-				pipes->room->visit_status = status;
-				enqueue(&tmp, &front, pipes->room);
-			}
-			pipes = pipes->next;
-		}
+		make_pipes(&front, &tmp, room, status);
 	}
+	delete_list(&test);
 	return (NULL);
 }
 
@@ -102,7 +91,7 @@ t_dblist	*run_algorithm(t_data data)
 		}
 		else
 			push_back(roads, road);
-		if  (road == data.anthill->end->room)
+		if (road == data.anthill->end->room)
 			break ;
 		status++;
 	}
