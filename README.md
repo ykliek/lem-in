@@ -1,5 +1,5 @@
 ![alt text](./pictures/Screenshot_2.png)
-# Elementary algorithmic project
+# Algorithmic project
 ### lem-im
 
 Staff pedago [pedago@42.fr](pedago@42.fr)
