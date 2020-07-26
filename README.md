@@ -374,36 +374,3 @@ fbouquet@thepathfinder /tmp/lem-in $
 * Now, it would have been interesting to find out more about the type of operations
 those students of the School of Wizardry could conduct with such a computer. All
 that we know is that electricity is way more reliable today
-
----
-
-# Chapter VI
-
-## Bonus part
-
-We will look at your bonuses if and only if your mandatory part is EXCELLENT. This
-means that your must complete the mandatory part, beginning to end, your algorithm is
-effective in solving the subject’s challenge, and your error management must be flawless,
-even in cases of twisted or bad usage. If that’s not the case, your bonuses will be totally
-IGNORED. <br>
-Find below a few ideas of interesting bonuses you could create. Some could even
-be useful. You can, of course, invent your own, which will then be evaluated by your
-correctors according to their own taste.<br>
-* As a bonus, why not code an ant farm vizualizer?
-    * Either in 2 dimensions, seen from the ”top“. Or even better from the perspective of an ant in the corridors of the farm in 3D.
-    * To use it, we could write: ./lem-in < ant_farm_map.txt | ./visu-hex
-    * Please note that because the commands and comments also appear on the
-standard output, it is possible to pass specific commands to the visualizer
-(such as various colors or levels)
-    * You should have noticed that the room’s coordinates will only be useful here.
-    
----
-
-# Chapter VII
-
-## Submission and peer correction
-
-Submit your work on your GiT repository as usual. Only the work on your repository
-will be graded. <br>
-Good luck to all! And remember to push your author file! <br>
-
